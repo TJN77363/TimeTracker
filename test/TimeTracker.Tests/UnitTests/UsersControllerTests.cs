@@ -1,5 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using TimeTracker.Controllers;
 using TimeTracker.Data;
 using TimeTracker.Domain;
@@ -29,6 +34,13 @@ namespace TimeTracker.Tests.UnitTests
             _controller = new UsersController(dbContext, logger);
         }
 
+        [Fact]
+        public async Task GetById_IdIsNonExisting_ReturnsNotFoundResult()
+        {
+            var result = await _controller.GetById(0);
+
+            Assert.IsType<NotFoundResult>(result.Result);
+        }
         [Fact]
         public async Task GetById_IdExists_ReturnsCorrectResult()
         {

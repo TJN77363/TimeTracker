@@ -23,7 +23,7 @@ namespace TimeTracker.Tests.IntegrationTests
 
         public UsersApiTests()
         {
-            const string issuer = "http://localhost:44383";
+            const string issuer = "http://localhost:44303";
             const string key = "some-long-secret-key";
 
             // Must initialize and open Sqlite connection in order to keep in-memory database tables
@@ -36,9 +36,9 @@ namespace TimeTracker.Tests.IntegrationTests
                 .UseSetting("Tokens:Issuer", issuer)
                 .UseSetting("Tokens:Key", key)
                 .UseStartup<Startup>()
-                .UseUrls("https://localhost:44383"))
+                .UseUrls("https://localhost:44303"))
             {
-                BaseAddress = new Uri("https://localhost:44383")
+                BaseAddress = new Uri("https://localhost:44303")
             };
 
             // Force creation of InMemory database
@@ -52,7 +52,6 @@ namespace TimeTracker.Tests.IntegrationTests
             _adminToken = JwtTokenGenerator.Generate(
                 "aspnetcore-workshop-demo", true, issuer, key);
         }
-
         [Fact]
         public async Task Delete_NoAuthorizationHeader_ReturnsUnauthorized()
         {
