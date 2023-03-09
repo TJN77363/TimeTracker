@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TimeTracker.Data;
+using TimeTracker.Extensions;
 using TimeTracker.Models.Validation;
 
 namespace TimeTracker
@@ -26,8 +27,11 @@ namespace TimeTracker
         {
             services.AddDbContext<TimeTrackerDbContext>(options =>
             options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddControllers().AddFluentValidation(
                 fv => fv.RegisterValidatorsFromAssemblyContaining<UserInputModelValidator>());
+
+            services.AddJwtBearerAuthentication(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,7 +44,12 @@ namespace TimeTracker
 
             app.UseHttpsRedirection();
 
+            // Inject our custom error handling middleware into ASP.NET Core pipeline
+            app.UseMiddleware<ErrorHandlingMiddleware>();
+
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

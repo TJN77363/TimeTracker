@@ -10,7 +10,7 @@ using TimeTracker.Models;
 namespace TimeTracker.Controllers
 {
     [ApiController]
-    [Route("/api/v{version:apiVersion}/projects")]
+    [Route("/api/projects")]
     public class ProjectsController : Controller
     {
         private readonly TimeTrackerDbContext _dbContext;
