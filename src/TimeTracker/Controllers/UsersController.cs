@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Linq;
@@ -9,6 +10,7 @@ using TimeTracker.Models;
 namespace TimeTracker.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("/api/users")]
     public class UsersController : Controller
     {
@@ -52,10 +54,12 @@ namespace TimeTracker.Controllers
                 TotalCount = await _dbContext.Users.CountAsync()
             };
         }
+
+        [Authorize(Roles = "admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(long id)
         {
-            _logger.LogDebug($"Deleting user with id {id}");
+        _logger.LogDebug($"Deleting user with id {id}");
 
             var user = await _dbContext.Users.FindAsync(id);
 
@@ -69,6 +73,8 @@ namespace TimeTracker.Controllers
 
             return Ok();
         }
+
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public async Task<ActionResult<UserModel>> Create(UserInputModel model)
         {
@@ -85,6 +91,7 @@ namespace TimeTracker.Controllers
             return CreatedAtAction(nameof(GetById), "users", new { id = user.Id }, resultModel);
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPut("{id}")]
         public async Task<ActionResult<UserModel>> Update(long id, UserInputModel model)
         {
