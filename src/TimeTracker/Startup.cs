@@ -15,6 +15,9 @@ namespace TimeTracker
 {
     public class Startup
     {
+        public static Action<IConfiguration, DbContextOptionsBuilder> ConfigureDbContext = (configuration, options) =>
+            options.UseSqlite(configuration.GetConnectionString("DefaultConnection"));
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -32,6 +35,8 @@ namespace TimeTracker
                 fv => fv.RegisterValidatorsFromAssemblyContaining<UserInputModelValidator>());
 
             services.AddJwtBearerAuthentication(Configuration);
+
+            services.AddDbContext<TimeTrackerDbContext>(options => ConfigureDbContext(Configuration, options));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
