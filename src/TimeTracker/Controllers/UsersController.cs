@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -91,8 +92,16 @@ namespace TimeTracker.Controllers
             return CreatedAtAction(nameof(GetById), "users", new { id = user.Id }, resultModel);
         }
 
+        // In UsersController
+        /// <summary>
+        /// Modify the user with the given id, using the supplied data.
+        /// </summary>
+        /// <param name="id">Id of the user to modify.</param>
+        /// <param name="model">Data to modify the user from.</param>
         [Authorize(Roles = "admin")]
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserModel))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<UserModel>> Update(long id, UserInputModel model)
         {
             _logger.LogDebug($"Updating user with id {id}");
