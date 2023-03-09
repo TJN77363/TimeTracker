@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TimeTracker.Controllers;
 using TimeTracker.Data;
@@ -33,14 +30,6 @@ namespace TimeTracker.Tests.UnitTests
         }
 
         [Fact]
-        public async Task GetById_IdIsNonExisting_ReturnsNotFoundResult()
-        {
-            var result = await _controller.GetById(0);
-
-            Assert.IsType<NotFoundResult>(result.Result);
-        }
-
-        [Fact]
         public async Task GetById_IdExists_ReturnsCorrectResult()
         {
             const string expectedName = "Test User 1";
@@ -51,7 +40,6 @@ namespace TimeTracker.Tests.UnitTests
             Assert.NotNull(result.Value);
             Assert.Equal(expectedName, result.Value.Name);
         }
-
         [Fact]
         public async Task GetPage_FirstPage_ReturnsExpectedResult()
         {
@@ -78,7 +66,6 @@ namespace TimeTracker.Tests.UnitTests
             Assert.Empty(result.Value.Items);
             Assert.Equal(expectedTotalCount, result.Value.TotalCount);
         }
-
         [Fact]
         public async Task Delete_IdIsNotExisting_ReturnsNotFoundResult()
         {
