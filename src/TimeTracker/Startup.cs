@@ -37,6 +37,8 @@ namespace TimeTracker
             services.AddJwtBearerAuthentication(Configuration);
 
             services.AddDbContext<TimeTrackerDbContext>(options => ConfigureDbContext(Configuration, options));
+
+            services.AddOpenApi();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,6 +59,10 @@ namespace TimeTracker
             app.UseAuthentication();
 
             app.UseAuthorization();
+
+            app.UseOpenApi();
+
+            app.UseSwaggerUi3();
 
             app.UseEndpoints(endpoints =>
             {
