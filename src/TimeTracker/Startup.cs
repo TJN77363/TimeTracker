@@ -39,6 +39,8 @@ namespace TimeTracker
             services.AddDbContext<TimeTrackerDbContext>(options => ConfigureDbContext(Configuration, options));
 
             services.AddOpenApi();
+
+            services.AddVersioning();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

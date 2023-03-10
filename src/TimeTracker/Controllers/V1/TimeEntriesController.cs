@@ -10,10 +10,10 @@ using TimeTracker.Data;
 using TimeTracker.Domain;
 using TimeTracker.Models;
 
-namespace TimeTracker.Controllers
+namespace TimeTracker.Controllers.V1
 {
     [ApiController]
-    [ApiVersion("2")]
+    [ApiVersion("1", Deprecated = true)]
     [Authorize]
     [Route("/api/v{version:apiVersion}/time-entries")]
     public class TimeEntriesController : Controller
@@ -131,7 +131,7 @@ namespace TimeTracker.Controllers
 
             var resultModel = TimeEntryModel.FromTimeEntry(timeEntry);
 
-            return CreatedAtAction(nameof(GetById), "TimeEntries", new { id = timeEntry.Id, version = "2" }, resultModel);
+            return CreatedAtAction(nameof(GetById), "TimeEntries", new { id = timeEntry.Id, version = "1" }, resultModel);
         }
 
         [Authorize(Roles = "admin")]

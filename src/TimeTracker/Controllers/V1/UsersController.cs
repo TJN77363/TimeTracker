@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 using TimeTracker.Data;
 using TimeTracker.Models;
 
-namespace TimeTracker.Controllers
+namespace TimeTracker.Controllers.V1
 {
     [ApiController]
-    [ApiVersion("2")]
+    [ApiVersion("1", Deprecated = true)]
     [Authorize]
     [Route("/api/v{version:apiVersion}/users")]
     public class UsersController : Controller
     {
         private readonly TimeTrackerDbContext _dbContext;
-            private readonly ILogger<UsersController> _logger;
+        private readonly ILogger<UsersController> _logger;
 
         public UsersController(TimeTrackerDbContext dbContext, ILogger<UsersController> logger)
         {
@@ -90,7 +90,7 @@ namespace TimeTracker.Controllers
 
             var resultModel = UserModel.FromUser(user);
 
-            return CreatedAtAction(nameof(GetById), "users", new { id = user.Id, version = "2" }, resultModel);
+            return CreatedAtAction(nameof(GetById), "users", new { id = user.Id, version = "1" }, resultModel);
         }
 
         // In UsersController
