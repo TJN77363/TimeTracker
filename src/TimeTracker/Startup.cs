@@ -1,6 +1,5 @@
 using System;
 using FluentValidation.AspNetCore;
-using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
@@ -45,8 +44,6 @@ namespace TimeTracker
 
             services.AddHealthChecks()
                 .AddSqlite(Configuration.GetConnectionString("DefaultConnection"));
-            // At the end of ConfigureServices method:
-            services.AddHealthChecksUI();
 
         }
 
@@ -74,17 +71,10 @@ namespace TimeTracker
 
             app.UseSwaggerUi3();
 
-            // Modify app.UseEndpoints, and add UI middleware before it:
-            app.UseHealthChecksUI();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapHealthChecks("/health", new HealthCheckOptions
-                {
-                    Predicate = _ => true,
-                    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-                });
+                endpoints.MapHealthChecks("/health");
             });
         }
     }
