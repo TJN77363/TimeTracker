@@ -2,29 +2,29 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TimeTracker.Data;
 
 namespace TimeTracker.Data.Migrations
 {
     [DbContext(typeof(TimeTrackerDbContext))]
-    partial class TimeTrackerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190626172456_SeedData")]
+    partial class SeedData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.0.0");
+                .HasAnnotation("ProductVersion", "3.0.0-preview6.19304.10");
 
             modelBuilder.Entity("TimeTracker.Domain.Client", b =>
                 {
                     b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -46,15 +46,12 @@ namespace TimeTracker.Data.Migrations
             modelBuilder.Entity("TimeTracker.Domain.Project", b =>
                 {
                     b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .ValueGeneratedOnAdd();
 
-                    b.Property<long>("ClientId")
-                        .HasColumnType("INTEGER");
+                    b.Property<long>("ClientId");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -86,27 +83,20 @@ namespace TimeTracker.Data.Migrations
             modelBuilder.Entity("TimeTracker.Domain.TimeEntry", b =>
                 {
                     b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                        .IsRequired();
 
-                    b.Property<DateTime>("EntryDate")
-                        .HasColumnType("TEXT");
+                    b.Property<DateTime>("EntryDate");
 
-                    b.Property<decimal>("HourRate")
-                        .HasColumnType("TEXT");
+                    b.Property<decimal>("HourRate");
 
-                    b.Property<int>("Hours")
-                        .HasColumnType("INTEGER");
+                    b.Property<int>("Hours");
 
-                    b.Property<long>("ProjectId")
-                        .HasColumnType("INTEGER");
+                    b.Property<long>("ProjectId");
 
-                    b.Property<long>("UserId")
-                        .HasColumnType("INTEGER");
+                    b.Property<long>("UserId");
 
                     b.HasKey("Id");
 
@@ -115,62 +105,17 @@ namespace TimeTracker.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("TimeEntries");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            Description = "Time entry description 1",
-                            EntryDate = new DateTime(2019, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            HourRate = 25m,
-                            Hours = 5,
-                            ProjectId = 1L,
-                            UserId = 1L
-                        },
-                        new
-                        {
-                            Id = 2L,
-                            Description = "Time entry description 2",
-                            EntryDate = new DateTime(2019, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            HourRate = 25m,
-                            Hours = 2,
-                            ProjectId = 2L,
-                            UserId = 1L
-                        },
-                        new
-                        {
-                            Id = 3L,
-                            Description = "Time entry description 3",
-                            EntryDate = new DateTime(2019, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            HourRate = 25m,
-                            Hours = 1,
-                            ProjectId = 3L,
-                            UserId = 1L
-                        },
-                        new
-                        {
-                            Id = 4L,
-                            Description = "Time entry description 4",
-                            EntryDate = new DateTime(2019, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            HourRate = 30m,
-                            Hours = 8,
-                            ProjectId = 3L,
-                            UserId = 2L
-                        });
                 });
 
             modelBuilder.Entity("TimeTracker.Domain.User", b =>
                 {
                     b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .ValueGeneratedOnAdd();
 
-                    b.Property<decimal>("HourRate")
-                        .HasColumnType("TEXT");
+                    b.Property<decimal>("HourRate");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                        .IsRequired();
 
                     b.HasKey("Id");
 

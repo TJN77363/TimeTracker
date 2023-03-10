@@ -6,19 +6,17 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TimeTracker.Data;
 
-#nullable disable
-
 namespace TimeTracker.Data.Migrations
 {
     [DbContext(typeof(TimeTrackerDbContext))]
-    [Migration("20230309005922_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20190927214721_SeedTimeEntries")]
+    partial class SeedTimeEntries
     {
-        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "7.0.3");
+            modelBuilder
+                .HasAnnotation("ProductVersion", "3.0.0");
 
             modelBuilder.Entity("TimeTracker.Domain.Client", b =>
                 {
@@ -202,8 +200,6 @@ namespace TimeTracker.Data.Migrations
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Client");
                 });
 
             modelBuilder.Entity("TimeTracker.Domain.TimeEntry", b =>
@@ -219,10 +215,6 @@ namespace TimeTracker.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Project");
-
-                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }
