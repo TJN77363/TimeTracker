@@ -41,6 +41,10 @@ namespace TimeTracker
             services.AddOpenApi();
 
             services.AddVersioning();
+
+            services.AddHealthChecks()
+                .AddSqlite(Configuration.GetConnectionString("DefaultConnection"));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -70,6 +74,7 @@ namespace TimeTracker
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHealthChecks("/health");
             });
         }
     }
