@@ -45,6 +45,8 @@ namespace TimeTracker
             services.AddHealthChecks()
                 .AddSqlite(Configuration.GetConnectionString("DefaultConnection"));
 
+            // In Startup.ConfigureServices method
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,7 +61,6 @@ namespace TimeTracker
 
             // Inject our custom error handling middleware into ASP.NET Core pipeline
             app.UseMiddleware<ErrorHandlingMiddleware>();
-            app.UseMiddleware<LimitingMiddleware>();
 
             app.UseRouting();
 
@@ -76,6 +77,14 @@ namespace TimeTracker
                 endpoints.MapControllers();
                 endpoints.MapHealthChecks("/health");
             });
+
+            // In Startup.Configure method
+            // NOTE: this is just for demo purpose! Usually, you should limit access to a specific origin.
+            app.UseCors(
+                builder => builder
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
         }
     }
 }
